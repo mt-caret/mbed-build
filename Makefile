@@ -1,5 +1,6 @@
 TOOLCHAIN=GCC_ARM
 MCU=LPC1768
+VOLUME_NAME=MBED
 
 container:
 	docker build -t mtcaret/mbed:ver0.1 .
@@ -15,3 +16,10 @@ shell: container
 
 clean:
 	rm -rf build/*
+
+write: build
+	cp build/$(MCU)/GCC_ARM/build.bin /Volumes/$(VOLUME_NAME)/
+	sync
+	sleep 3
+	sudo umount /Volumes/$(VOLUME_NAME)
+
